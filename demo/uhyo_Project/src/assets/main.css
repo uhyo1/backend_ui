@@ -1,4 +1,10 @@
-@import './base.css';
+/* ← Tailwind を最優先で読み込む */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ← その後に既存の CSS を置く */
+@import "./base.css";
 
 #app {
   max-width: 1280px;
@@ -10,14 +16,14 @@
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+  color: hsl(160, 100%, 37%);
+  transition: 0.45s;
   padding: 3px;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: hsl(160, 100%, 37%, 0.2);
   }
 }
 
@@ -29,7 +35,5 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 }
