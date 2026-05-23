@@ -2,8 +2,8 @@ package com.uhyo.backend_ui.game;
 
 // 1枚のカードを表すクラス
 public class Card {
-    private String suit; // C, D, H, S, JOKER
-    private String rank; // A, 2〜10, J, Q, K, JOKER
+    private String suit; // C, D, H, S
+    private String rank; // A, 2〜10, J, Q, K
 
     public Card(String suit, String rank) {
         this.suit = suit;
@@ -16,5 +16,10 @@ public class Card {
     // Vue 側で画像ファイル名に使う
     public String getFileName() {
         return suit + "_" + rank + ".png";
+    }
+
+    @Override
+    public String toString() {
+        return suit + "_" + rank;
     }
 }

@@ -21,17 +21,17 @@ public class BlackjackGame {
         deck.clear();
 
         String[] suits = {"C", "D", "H", "S"};
-        String[] ranks = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+        String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
-        // 52枚
-        for (String s : suits) {
-            for (String r : ranks) {
-                deck.add(new Card(s, r));
+            for (String suit : suits) {
+                for (String rank : ranks) {
+        deck.add(new Card(suit, rank));
             }
         }
 
+
         // ジョーカー1枚
-        deck.add(new Card("JOKER", "JOKER"));
+        //deck.add(new Card("JOKER", "JOKER"));
 
         Collections.shuffle(deck);
     }

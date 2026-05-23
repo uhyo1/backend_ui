@@ -18,50 +18,59 @@ public class BlackjackController {
     // ゲーム開始
     // -----------------------------
     @GetMapping("/start")
-    public Map<String, Object> start() {
-        game = new BlackjackGame();
+public Map<String, Object> start() {
+    game = new BlackjackGame();
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("player", game.getPlayerHand());
-        result.put("dealer", Arrays.asList(game.getDealerHand().get(0), "HIDDEN"));
-        result.put("message", "ゲーム開始！ Hit か Stand を選んでください。");
+    Map<String, Object> result = new HashMap<>();
+    result.put("player", game.getPlayerHand());
+    result.put("dealer", Arrays.asList(game.getDealerHand().get(0), "HIDDEN"));
+    result.put("playerValue", game.calculateScore(game.getPlayerHand()));
+    result.put("dealerValue", game.calculateScore(Arrays.asList(game.getDealerHand().get(0))));
+    result.put("message", "ゲーム開始！ Hit か Stand を選んでください。");
 
-        return result;
-    }
+    return result;
+}
+
 
     // -----------------------------
     // プレイヤーがカードを引く
     // -----------------------------
     @GetMapping("/hit")
-    public Map<String, Object> hit() {
-        game.playerHit();
+public Map<String, Object> hit() {
+    game.playerHit();
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("player", game.getPlayerHand());
-        result.put("dealer", Arrays.asList(game.getDealerHand().get(0), "HIDDEN"));
+    Map<String, Object> result = new HashMap<>();
+    result.put("player", game.getPlayerHand());
+    result.put("dealer", Arrays.asList(game.getDealerHand().get(0), "HIDDEN"));
+    result.put("playerValue", game.calculateScore(game.getPlayerHand()));
+    result.put("dealerValue", game.calculateScore(Arrays.asList(game.getDealerHand().get(0))));
 
-        int score = game.calculateScore(game.getPlayerHand());
-        if (score > 21) {
-            result.put("message", "バースト！あなたの負け");
-        } else {
-            result.put("message", "Hit しました。続けますか？");
-        }
-
-        return result;
+    int score = game.calculateScore(game.getPlayerHand());
+    if (score > 21) {
+        result.put("message", "バースト！あなたの負け");
+    } else {
+        result.put("message", "Hit しました。続けますか？");
     }
+
+    return result;
+}
+
 
     // -----------------------------
     // Stand → ディーラーのターン
     // -----------------------------
     @GetMapping("/stand")
-    public Map<String, Object> stand() {
-        game.dealerTurn();
+public Map<String, Object> stand() {
+    game.dealerTurn();
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("player", game.getPlayerHand());
-        result.put("dealer", game.getDealerHand());
-        result.put("result", game.judge());
+    Map<String, Object> result = new HashMap<>();
+    result.put("player", game.getPlayerHand());
+    result.put("dealer", game.getDealerHand());
+    result.put("playerValue", game.calculateScore(game.getPlayerHand()));
+    result.put("dealerValue", game.calculateScore(game.getDealerHand()));
+    result.put("result", game.judge());
 
-        return result;
-    }
+    return result;
+}
+
 }
