@@ -28,6 +28,12 @@ public class FileProxyController {
     public List<String> getFiles() {
         return restTemplate.getForObject(DATA_FILES_URL, List.class);
     }
+
+    @GetMapping("/images/all")
+    public List<Map<String, Object>> proxyAllImages() {
+        return restTemplate.getForObject("http://localhost:9001/images/all", List.class);
+    }
+
     @GetMapping("/images/random")
     public Map<String, Object> proxyRandomImage() {
         return restTemplate.getForObject("http://localhost:9001/images/random", Map.class);
@@ -37,7 +43,7 @@ public class FileProxyController {
     public ResponseEntity<byte[]> proxyImageFile(@PathVariable("id") Long id) {
         String url = "http://localhost:9001/images/file/" + id;
         return restTemplate.getForEntity(url, byte[].class);
-}
+    }
 
     /**
      * POST /download
