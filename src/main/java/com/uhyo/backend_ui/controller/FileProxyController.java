@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Vue → backend_ui → backend_data_management
@@ -27,6 +28,16 @@ public class FileProxyController {
     public List<String> getFiles() {
         return restTemplate.getForObject(DATA_FILES_URL, List.class);
     }
+    @GetMapping("/images/random")
+    public Map<String, Object> proxyRandomImage() {
+        return restTemplate.getForObject("http://localhost:9001/images/random", Map.class);
+    }
+
+    @GetMapping("/images/file/{id}")
+    public ResponseEntity<byte[]> proxyImageFile(@PathVariable("id") Long id) {
+        String url = "http://localhost:9001/images/file/" + id;
+        return restTemplate.getForEntity(url, byte[].class);
+}
 
     /**
      * POST /download
