@@ -112,8 +112,8 @@ public class Board {
      * 石を置く（ひっくり返し含む）
      */
     public void placeStone(int x, int y, int color) {
-        cells[y][x] = color;
         List<int[]> flips = getFlippedStones(x, y, color);
+        cells[y][x] = color;
         for (int[] f : flips) {
             cells[f[1]][f[0]] = color;
         }

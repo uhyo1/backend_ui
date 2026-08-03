@@ -22,11 +22,13 @@ public class CpuStrategyUltra implements CpuStrategy {
         int bestScore = Integer.MIN_VALUE;
 
         for (Move move : validMoves) {
+            int beforeOpponentMoves = board.getValidMoves(opponent).size();
 
             Board temp = board.copy();
             temp.placeStone(move.getX(), move.getY(), cpuColor);
 
-            int score = evaluate(temp, move, cpuColor, opponent);
+            int afterOpponentMoves = temp.getValidMoves(opponent).size();
+            int score = evaluate(temp, move, cpuColor, opponent, beforeOpponentMoves, afterOpponentMoves);
 
             if (score > bestScore) {
                 bestScore = score;
@@ -40,7 +42,7 @@ public class CpuStrategyUltra implements CpuStrategy {
     /**
      * ULTRA の評価関数
      */
-    private int evaluate(Board temp, Move move, int cpuColor, int opponent) {
+    private int evaluate(Board temp, Move move, int cpuColor, int opponent, int beforeOpponentMoves, int afterOpponentMoves) {
         int score = 0;
 
         int x = move.getX();
@@ -60,9 +62,7 @@ public class CpuStrategyUltra implements CpuStrategy {
         int flipped = temp.countStones(cpuColor) - temp.countStones(opponent);
         score += flipped;
 
-        int before = temp.getValidMoves(opponent).size();
-        int after = temp.getValidMoves(opponent).size();
-        score += (before - after) * 5;
+        score += (beforeOpponentMoves - afterOpponentMoves) * 5;
 
         int myStones = temp.countStones(cpuColor);
         int oppStones = temp.countStones(opponent);
